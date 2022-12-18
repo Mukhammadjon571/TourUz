@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { KnexModule } from 'nest-knexjs';
 import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 import  knexConfig  from 'knexfile';
 import config from './config';
 
@@ -10,6 +11,7 @@ import config from './config';
   imports: [
     KnexModule.forRoot({config:knexConfig[config.server.env]}),
     AuthModule,
+    UsersModule, 
   ],
   controllers: [AppController],
   providers: [AppService],

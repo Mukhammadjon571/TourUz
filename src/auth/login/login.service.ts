@@ -1,39 +1,34 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { SmsServiceService } from 'src/sms-service/sms-service.service';
 import { IUser } from 'src/users/interface/user.interface';
 import { UsersService } from 'src/users/users.service';
-import { generateHash } from 'src/utils/bcrypt';
+import { compareHash } from 'src/utils/bcrypt';
 import { IOtpLog } from '../otp-logs/interface/otp-log.interface';
 import { OtpLogsService } from '../otp-logs/otp-logs.service';
-import { RegisterDto } from './dto/register.dto';
+import { LoginDto } from './dto/login.dto';
 
 @Injectable()
-export class RegisterService {
+export class LoginService {
   constructor(
     private readonly usersService: UsersService,
     private readonly otpLogsService: OtpLogsService,
+    private readonly smsService: SmsServiceService,
   ) {}
 
-  async register(data: RegisterDto) {
-    const foundUserByPhoneNumber: IUser =
-      await this.usersService.findByPhoneNumber(data.phone_number);
+  async login(data: LoginDto) {
+    const user: IUser = await this.usersService.findByPhoneNumber(
+      data.phone_number,
+    );
 
-    if (foundUserByPhoneNumber) {
-      throw new ConflictException(`${data.phone_number} has already used`);
-    } else if (!this.usersService.isEmptyUsername(data.username)) {
-      throw new ConflictException(`${data.username} has already taken`);
+    if (!user) {
+      throw new NotFoundException();
+    } else if (!(await compareHash(data.password, user.password))) {
+      throw new UnauthorizedException();
     }
-
-    const user: IUser = await this.usersService.create({
-      email: data.email,
-      is_verified: false,
-      full_name: data.full_name,
-      password: await generateHash(data.password),
-      phone_number: data.phone_number,
-      username: data.username,
-      avatar: null,
-      avatar_json: null,
-    });
 
     const otp: IOtpLog = await this.otpLogsService.create({
       created_by: user.id,
