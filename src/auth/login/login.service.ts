@@ -3,25 +3,25 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { SmsServiceService } from 'src/sms-service/sms-service.service';
+// import { SmsServiceService } from 'src/sms-service/sms-service.service';
 import { IUser } from 'src/users/interface/user.interface';
 import { UsersService } from 'src/users/users.service';
 import { compareHash } from 'src/utils/bcrypt';
-import { IOtpLog } from '../otp-logs/interface/otp-log.interface';
-import { OtpLogsService } from '../otp-logs/otp-logs.service';
+// import { IOtpLog } from '../otp-logs/interface/otp-log.interface';
+// import { OtpLogsService } from '../otp-logs/otp-logs.service';
 import { LoginDto } from './dto/login.dto';
 
 @Injectable()
 export class LoginService {
   constructor(
     private readonly usersService: UsersService,
-    private readonly otpLogsService: OtpLogsService,
-    private readonly smsService: SmsServiceService,
+    // private readonly otpLogsService: OtpLogsService,
+    // private readonly smsService: SmsServiceService,
   ) {}
 
   async login(data: LoginDto) {
-    const user: IUser = await this.usersService.findByPhoneNumber(
-      data.phone_number,
+    const user: IUser = await this.usersService.findByEmail(
+      data.email,
     );
 
     if (!user) {
@@ -30,21 +30,21 @@ export class LoginService {
       throw new UnauthorizedException();
     }
 
-    const otp: IOtpLog = await this.otpLogsService.create({
-      created_by: user.id,
-      given_to: user.id,
-      phone_number: user.phone_number,
-    });
+    // const otp: IOtpLog = await this.otpLogsService.create({
+    //   created_by: user.id,
+    //   given_to: user.id,
+    //   phone_number: user.phone_number,
+    // });
 
-    console.log(otp);
+    // console.log(otp);
 
     // const smsContent: string = `Confirmation code: ${otp.code}`;
 
     // this.smsService.sendSms(user.phone_number, smsContent);
 
-    const telegramContent = `Confirmation code: ${otp.code}\nPhone number: ${user.phone_number}`;
+    // const telegramContent = `Confirmation code: ${otp.code}\nPhone number: ${user.phone_number}`;
 
-    this.smsService.viaTelegram(telegramContent);
+    // this.smsService.viaTelegram(telegramContent);
 
     return 'The one time password has been sent';
   }
