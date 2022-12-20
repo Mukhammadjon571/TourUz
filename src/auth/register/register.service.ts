@@ -42,6 +42,8 @@ export class RegisterService {
       email: user.email,
     });
 
+    console.log(otp)
+
     // console.log(otp);
 
     // const smsContent: string = `Confirmation code: ${otp.code}`;

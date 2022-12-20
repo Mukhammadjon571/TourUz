@@ -49,11 +49,8 @@ export class UsersRepo {
     return this.knex({ u: this.tableName })
       .select(
         ...this.columns.map((column) => `u.${column}`),
-        this.knex.raw(`
-          be.is_active as is_employee
-      `),
+        
       )
-      .leftJoin('brand_employees as be', 'be.user_id', '=', 'u.id')
       .where('u.id', id)
       .first();
   }
