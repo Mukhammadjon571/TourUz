@@ -7,22 +7,20 @@ import {
 import { IUser } from 'src/users/interface/user.interface';
 import { UsersService } from 'src/users/users.service';
 import { compareHash } from 'src/utils/bcrypt';
-// import { IOtpLog } from '../otp-logs/interface/otp-log.interface';
-// import { OtpLogsService } from '../otp-logs/otp-logs.service';
+import { IOtpLog } from '../otp-logs/interface/otp-log.interfaces';
+import { OtpLogsService } from '../otp-logs/otp-logs.service';
 import { LoginDto } from './dto/login.dto';
 
 @Injectable()
 export class LoginService {
   constructor(
     private readonly usersService: UsersService,
-    // private readonly otpLogsService: OtpLogsService,
-    // private readonly smsService: SmsServiceService,
-  ) {}
+    private readonly otpLogsService: OtpLogsService,
+  ) // private readonly smsService: SmsServiceService,
+  {}
 
   async login(data: LoginDto) {
-    const user: IUser = await this.usersService.findByEmail(
-      data.email,
-    );
+    const user: IUser = await this.usersService.findByEmail(data.email);
 
     if (!user) {
       throw new NotFoundException();
@@ -30,13 +28,13 @@ export class LoginService {
       throw new UnauthorizedException();
     }
 
-    // const otp: IOtpLog = await this.otpLogsService.create({
-    //   created_by: user.id,
-    //   given_to: user.id,
-    //   phone_number: user.phone_number,
-    // });
+    const otp: IOtpLog = await this.otpLogsService.create({
+      created_by: user.id,
+      given_to: user.id,
+      email: user.email,
+    });
 
-    // console.log(otp);
+    console.log(otp);
 
     // const smsContent: string = `Confirmation code: ${otp.code}`;
 

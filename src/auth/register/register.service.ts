@@ -3,15 +3,15 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { IUser } from 'src/users/interface/user.interface';
 import { UsersService } from 'src/users/users.service';
 import { generateHash } from 'src/utils/bcrypt';
-// import { IOtpLog } from '../otp-logs/interface/otp-log.interface';
-// import { OtpLogsService } from '../otp-logs/otp-logs.service';
+import { IOtpLog } from '../otp-logs/interface/otp-log.interfaces';
+import { OtpLogsService } from '../otp-logs/otp-logs.service';
 import { RegisterDto } from './dto/register.dto';
 
 @Injectable()
 export class RegisterService {
   constructor(
     private readonly usersService: UsersService,
-    // private readonly otpLogsService: OtpLogsService,
+    private readonly otpLogsService: OtpLogsService,
   ) {}
 
   async register(data: RegisterDto) {
@@ -36,11 +36,11 @@ export class RegisterService {
       avatar_json: null,
     });
 
-    // const otp: IOtpLog = await this.otpLogsService.create({
-    //   created_by: user.id,
-    //   given_to: user.id,
-    //   phone_number: user.phone_number,
-    // });
+    const otp: IOtpLog = await this.otpLogsService.create({
+      created_by: user.id,
+      given_to: user.id,
+      email: user.email,
+    });
 
     // console.log(otp);
 
