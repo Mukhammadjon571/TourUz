@@ -11,5 +11,5 @@ export interface IUser {
   email: string | null;
   is_verified: boolean;
   is_active: boolean;
-  brands: number[];
+  is_admin: boolean;
 }

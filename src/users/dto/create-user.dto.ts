@@ -29,7 +29,7 @@ export class CreateUserDto {
 
   @IsDefined()
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   phone_number: string;
 
   @IsDefined()
@@ -49,6 +49,6 @@ export class CreateUserDto {
 
   @IsDefined()
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   is_verified: boolean;
 }

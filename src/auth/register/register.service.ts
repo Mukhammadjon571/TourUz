@@ -44,7 +44,7 @@ export class RegisterService {
       email: user.email,
     });
 
-    await new Email(user, otp.code).sendCode();
+    await new Email(user).sendCode(otp.code);
 
     return 'The one time password has been sent';
   }

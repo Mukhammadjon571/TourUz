@@ -5,13 +5,11 @@ import config from 'src/config';
 class Email {
   to: string;
   fullName: string;
-  code: string;
   from: string;
 
-  constructor(user, code) {
+  constructor(user) {
     this.to = user.email;
     this.fullName = user.full_name;
-    this.code = code;
     this.from = `TourUz <${process.env.EMAIL_FROM}>`;
   }
 
@@ -44,15 +42,30 @@ class Email {
     const mailOptions = {
       from: this.from,
       to: this.to,
-      subject:subject,
+      subject: subject,
       text: `Confirmation code: ${code}`,
     };
 
     await this.newTransport().sendMail(mailOptions);
   }
 
-  async sendCode() {
-    await this.send(this.code, "Confirmation code");
+  async sendPassword(password, subject) {
+    const mailOptions = {
+      from: this.from,
+      to: this.to,
+      subject: subject,
+      text: `Your new password:${password}`,
+    };
+
+    await this.newTransport().sendMail(mailOptions);
+  }
+
+  async sendCode(code:number) {
+    await this.send(code, 'Confirmation code');
+  }
+
+  async sendPass(password:string) {
+    await this.sendPassword(password, 'Your new password');
   }
 
   async sendPasswordReset() {

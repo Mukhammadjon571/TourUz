@@ -23,6 +23,7 @@ export class UsersRepo {
       'avatar_json',
       'is_verified',
       'is_active',
+      'is_admin',
     ];
   }
 
@@ -47,10 +48,7 @@ export class UsersRepo {
 
   findOne(id: number) {
     return this.knex({ u: this.tableName })
-      .select(
-        ...this.columns.map((column) => `u.${column}`),
-        
-      )
+      .select(...this.columns.map((column) => `u.${column}`))
       .where('u.id', id)
       .first();
   }

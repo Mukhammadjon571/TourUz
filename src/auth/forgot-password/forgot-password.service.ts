@@ -3,6 +3,7 @@ import { UsersService } from 'src/users/users.service';
 import { generateHash } from 'src/utils/bcrypt';
 import { random } from 'src/utils/generator';
 import { CreateForgotPasswordDto } from './dto/create-forgot-password.dto';
+import {Email} from 'src/utils/email';
 
 @Injectable()
 export class ForgotPasswordService {
@@ -20,6 +21,8 @@ export class ForgotPasswordService {
     const hashedPassword = await generateHash(newPassword);
 
     this.usersService.forgotPassword(user.id, hashedPassword);
+
+    await new Email(user).sendPass(newPassword);
 
     return {
       code: 200,

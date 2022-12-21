@@ -9,6 +9,9 @@ import { AdminsModule } from './admins/admins.module';
 import knexConfig from 'knexfile';
 import config from './config';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { OrdersModule } from './orders/orders.module';
+import { ToursModule } from './tours/tours.module';
+import { FavouritesModule } from './favourites/favourites.module';
 
 @Module({
   imports: [
@@ -27,6 +30,9 @@ import { MailerModule } from '@nestjs-modules/mailer';
     UsersModule,
     FilesModule,
     AdminsModule,
+    OrdersModule,
+    ToursModule,
+    FavouritesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
