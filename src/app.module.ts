@@ -12,6 +12,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { OrdersModule } from './orders/orders.module';
 import { ToursModule } from './tours/tours.module';
 import { FavouritesModule } from './favourites/favourites.module';
+import { ToursMediaModule } from './tours_media/tours_media.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { FavouritesModule } from './favourites/favourites.module';
     OrdersModule,
     ToursModule,
     FavouritesModule,
+    ToursMediaModule,
   ],
   controllers: [AppController],
   providers: [AppService],
