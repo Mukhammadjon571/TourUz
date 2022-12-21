@@ -12,7 +12,6 @@ type Postgres = {
   database: string;
 };
 
-
 type AuthToken = {
   accessTokenSecret: string;
   refreshTokenSecret: string;
@@ -25,12 +24,26 @@ type AWSService = {
   region: string;
   accessKey: string;
   secretKey: string;
-  url:string
+  url: string;
 };
+
+type MailService = {
+  host: string;
+  port: number;
+  user: string;
+  pass: string;
+};
+
+type SendGrid ={
+  username:string;
+  password:string;
+}
 
 export type Config = {
   server: Server;
   postgres: Postgres;
   authToken: AuthToken;
   awsService: AWSService;
+  mailService: MailService;
+  sendGrid:SendGrid;
 };

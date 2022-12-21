@@ -6,9 +6,17 @@ import { VerifyModule } from './verify/verify.module';
 import { LoginModule } from './login/login.module';
 import { OtpLogsModule } from './otp-logs/otp-logs.module';
 import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
-
+import { RefreshTokenModule } from './refresh-token/refresh-token.module';
 @Module({
   providers: [JwtStrategy],
-  imports: [RegisterModule, TokenModule, VerifyModule, LoginModule, OtpLogsModule, ForgotPasswordModule],
+  imports: [
+    RegisterModule,
+    TokenModule,
+    VerifyModule,
+    LoginModule,
+    OtpLogsModule,
+    ForgotPasswordModule,
+    RefreshTokenModule,
+  ],
 })
 export class AuthModule {}

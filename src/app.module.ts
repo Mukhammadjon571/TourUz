@@ -5,15 +5,28 @@ import { KnexModule } from 'nest-knexjs';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { FilesModule } from './files/files.module';
-import  knexConfig  from 'knexfile';
+import { AdminsModule } from './admins/admins.module';
+import knexConfig from 'knexfile';
 import config from './config';
+import { MailerModule } from '@nestjs-modules/mailer';
 
 @Module({
   imports: [
-    KnexModule.forRoot({config:knexConfig[config.server.env]}),
+    KnexModule.forRoot({ config: knexConfig[config.server.env] }),
+    MailerModule.forRoot({
+      transport: {
+        host: 'smtp.sendgrid.net',
+        port:465,
+        auth: {
+          user: 'apikey',
+          pass: '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',
+        },
+      },
+    }),
     AuthModule,
     UsersModule,
-    FilesModule, 
+    FilesModule,
+    AdminsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

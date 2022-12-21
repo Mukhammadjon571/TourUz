@@ -33,15 +33,15 @@ export class FilesService {
         original_name: file.originalname,
         filename:
           `${config.awsService.url}/${file['key']}` ||
-          `{config.awsService.url}${uuid() + '.' + this.getExtension(file.mimetype)}`,
+          `{config.awsService.url}${
+            uuid() + '.' + this.getExtension(file.mimetype)
+          }`,
         mimetype: file.mimetype,
         extension,
         created_by: user?.id,
         size: file.size,
       });
     }
-
-    
 
     return this.filesRepo.upload(customizedFiles);
   }

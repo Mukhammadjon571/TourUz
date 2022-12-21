@@ -27,8 +27,18 @@ const config: Config = {
     region: process.env.AWS_BUCKET_REGION,
     accessKey: process.env.AWS_ACCESS_KEY,
     secretKey: process.env.AWS_SECRET_KEY,
-    url:process.env.AWS_URL
+    url: process.env.AWS_URL,
   },
+  mailService: {
+    host: process.env.EMAIL_HOST,
+    port: +process.env.EMAIL_PORT,
+    user: process.env.EMAIL_USERNAME,
+    pass: process.env.EMAIL_PASSWORD,
+  },
+  sendGrid:{
+    username:process.env.SENDGRID_USERNAME,
+    password:process.env.SENDGRID_PASSWORD
+  }
 };
 
 export default config;

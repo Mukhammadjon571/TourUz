@@ -1,17 +1,19 @@
+import { MailerService } from '@nestjs-modules/mailer';
 import { ConflictException, Injectable } from '@nestjs/common';
-// import { SmsServiceService } from 'src/sms-service/sms-service.service';
 import { IUser } from 'src/users/interface/user.interface';
 import { UsersService } from 'src/users/users.service';
 import { generateHash } from 'src/utils/bcrypt';
 import { IOtpLog } from '../otp-logs/interface/otp-log.interfaces';
 import { OtpLogsService } from '../otp-logs/otp-logs.service';
 import { RegisterDto } from './dto/register.dto';
+import { Email } from 'src/utils/email';
 
 @Injectable()
 export class RegisterService {
   constructor(
     private readonly usersService: UsersService,
     private readonly otpLogsService: OtpLogsService,
+    private readonly mailService: MailerService,
   ) {}
 
   async register(data: RegisterDto) {
@@ -42,17 +44,7 @@ export class RegisterService {
       email: user.email,
     });
 
-    console.log(otp)
-
-    // console.log(otp);
-
-    // const smsContent: string = `Confirmation code: ${otp.code}`;
-
-    // this.smsService.sendSms(user.phone_number, smsContent);
-
-    // const telegramContent = `Confirmation code: ${otp.code}\nPhone number: ${user.phone_number}`;
-
-    // this.smsService.viaTelegram(telegramContent);
+    await new Email(user, otp.code).sendCode();
 
     return 'The one time password has been sent';
   }
