@@ -13,6 +13,7 @@ import { OrdersModule } from './orders/orders.module';
 import { ToursModule } from './tours/tours.module';
 import { FavouritesModule } from './favourites/favourites.module';
 import { ToursMediaModule } from './tours_media/tours_media.module';
+import { MessagesModule } from './messages/messages.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { ToursMediaModule } from './tours_media/tours_media.module';
     ToursModule,
     FavouritesModule,
     ToursMediaModule,
+    MessagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
