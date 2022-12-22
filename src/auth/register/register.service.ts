@@ -1,4 +1,3 @@
-import { MailerService } from '@nestjs-modules/mailer';
 import { ConflictException, Injectable } from '@nestjs/common';
 import { IUser } from 'src/users/interface/user.interface';
 import { UsersService } from 'src/users/users.service';
@@ -13,7 +12,6 @@ export class RegisterService {
   constructor(
     private readonly usersService: UsersService,
     private readonly otpLogsService: OtpLogsService,
-    private readonly mailService: MailerService,
   ) {}
 
   async register(data: RegisterDto) {

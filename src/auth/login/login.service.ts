@@ -1,4 +1,4 @@
-import { MailerService } from '@nestjs-modules/mailer';
+
 import {
   Injectable,
   NotFoundException,
