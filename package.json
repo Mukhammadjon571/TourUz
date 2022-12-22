@@ -38,7 +38,6 @@
     "dotenv": "^16.0.3",
     "email-templates": "^10.0.1",
     "express": "^4.18.2",
-    "html-to-text": "^9.0.3",
     "knex": "^2.3.0",
     "mailtrap": "^3.0.1",
     "multer-s3": "^2.10.0",
