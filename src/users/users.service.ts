@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { compareHash, generateHash } from 'src/utils/bcrypt';
 import { CreateUserDto } from './dto/create-user.dto';
-// import { ResetPasswordDto } from './dto/reset-password';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 import { UpdateUserDTO } from './dto/update-user.dto';
 import { IUser } from './interface/user.interface';
 import { UsersRepo } from './repo/user.repo';
@@ -51,26 +51,26 @@ export class UsersService {
     return this.repo.verifyById(id);
   }
 
-  // async resetPassword(userId: number, data: ResetPasswordDto) {
-  //   const user = await this.repo.getUserPassword(userId);
+  async resetPassword(userId: number, data: ResetPasswordDto) {
+    const user = await this.repo.getUserPassword(userId);
 
-  //   if (!user) {
-  //     throw new NotFoundException('user not found');
-  //   }
-  //   if (!(await compareHash(data.oldPassword, user.password))) {
-  //     throw new ConflictException("user's passwords not match");
-  //   }
+    if (!user) {
+      throw new NotFoundException('user not found');
+    }
+    if (!(await compareHash(data.oldPassword, user.password))) {
+      throw new ConflictException("user's passwords not match");
+    }
 
-  //   const hashedPassword = await generateHash(data.newPassword);
+    const hashedPassword = await generateHash(data.newPassword);
 
-  //   this.repo.updatePassword(userId, hashedPassword);
+    this.repo.updatePassword(userId, hashedPassword);
 
-  //   return {
-  //     code: 200,
-  //     message: 'updated',
-  //     data: null,
-  //   };
-  // }
+    return {
+      code: 200,
+      message: 'updated',
+      data: null,
+    };
+  }
 
   async forgotPassword(id: number, password: string) {
     return await this.repo.updatePassword(id, password);
@@ -78,5 +78,9 @@ export class UsersService {
 
   update(id: number, body: UpdateUserDTO) {
     return this.repo.updateById(id, body);
+  }
+
+  async updatePassword(id: number, password: string) {
+    return await this.repo.updatePassword(id, password);
   }
 }

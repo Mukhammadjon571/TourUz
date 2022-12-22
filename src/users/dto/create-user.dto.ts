@@ -52,3 +52,5 @@ export class CreateUserDto {
   @IsOptional()
   is_verified: boolean;
 }
+
+
