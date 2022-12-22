@@ -39,7 +39,6 @@
     "email-templates": "^10.0.1",
     "express": "^4.18.2",
     "knex": "^2.3.0",
-    "mailtrap": "^3.0.1",
     "multer-s3": "^2.10.0",
     "nest-knexjs": "^0.0.12",
     "nodemailer": "^6.8.0",
